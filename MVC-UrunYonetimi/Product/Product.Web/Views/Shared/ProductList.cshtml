@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Product.Data.Model.Products>
+
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                if (product.ProductImages.Any())
+                {
+                    <div class="card-img-top product col-md-3 span4">
+                        <div class="product-title">
+                            <h3>
+                                @Html.ActionLink(product.ProductName, "Index", "Product", new { id = product.ProductId }, new { })
+                            </h3>
+                        </div>
+                        <div class="product-image">
+                            <a href="@Url.Action("Index", "Product", new { id = product.ProductId })">
+                                <img class="card-img-top" style="height:auto; max-width:100%" src="@string.Format("data:{0};base64,{1}", product.ProductImages.FirstOrDefault().ContentType, Convert.ToBase64String(product.ProductImages.FirstOrDefault().Content))" />
+                            </a>
+                        </div>
+                        <div class="price">
+                            @{
+                                var priceFeature = product.ProductFeatures.FirstOrDefault(x => x.FeatureName == "Fiyat");
+
+                                if (priceFeature != null)
+                                {
+                                    <span>@priceFeature.FeatureValue</span>
+                                }
+                                else
+                                {
+                                    <span>&nbsp;</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>

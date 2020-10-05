@@ -1,0 +1,16 @@
+﻿@model Product.Web.ViewModel.CategoryPageModel
+@{
+    ViewBag.Title = "Kategori";
+
+}
+
+<div class="row" >
+    <div class="col-md-2 float-left">
+        @Html.Partial("MainMenu", Model.CategoryList)
+    </div>
+
+    <div class="col-md-10">
+        @Html.Partial("ProductList", Model.ProductList)
+    </div>
+</div>
+

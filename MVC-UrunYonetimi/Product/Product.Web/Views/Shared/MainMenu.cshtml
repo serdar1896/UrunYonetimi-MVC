@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Product.Data.Model.Category>
+    <div>
+        @{ 
+            if (Model.Any())
+            {
+                <ul class="nav nav-pills flex-column">
+                    @foreach (var category in Model)
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink(category.CategoryName,"Index","Category",new { id=category.CategoryId},new { })
+
+                        </li>
+                    }
+               </ul>
+            }
+        }
+    </div>

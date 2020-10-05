@@ -1,0 +1,47 @@
+﻿@using Product.Admin.Helpers
+@model Product.Data.Model.Products
+@{
+    ViewBag.Title = "Ürün Detayı";
+}
+
+<h2>Ürün Detayı</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+    </dl>
+
+    @{
+        var productFirstImage = Model.ProductImages.FirstOrDefault();
+        if (productFirstImage != null)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+
+                </dt>
+                <dd>
+                    @*<img src=@string.Format("data:{0};base64,{1}",productFirstImage.ContentType,Convert.ToBase64String(productFirstImage.Content)) />*@
+                    @Html.Base64Image(productFirstImage)
+                </dd>
+            </dl>
+        }
+    }
+
+<p>
+    @Html.ActionLink("Özellikler", "Index", "ProductFeature", new { id = Model.ProductId }, new { })
+    @Html.ActionLink("Listeye Dön", "Index")
+</p>
+</div>

@@ -1,0 +1,52 @@
+﻿@model  Product.Web.ViewModel.ProductPageModel
+@{
+    ViewBag.Title = "ÜrünDetay";
+}
+
+    <div class="row">
+        <div class="col-md-2 float-left">
+            @Html.Partial("MainMenu", Model.CategoryList)
+        </div>
+
+        <div class="col-md-10">
+
+            <div class="span52-left">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            @Model.CurrentProduct.ProductName
+                        </h3>
+                    </div>
+                    <div class="pabel-body">
+                        <img width="500" height="400"
+                             src="@string.Format("data:{0};base64,{1}",Model.CurrentProduct.ProductImages.FirstOrDefault().ContentType,
+                                 Convert.ToBase64String(Model.CurrentProduct.ProductImages.FirstOrDefault().Content))"     
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="span52-left">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                        </h3>
+                    </div>
+                    <div class="pabel-body">
+                        <table class="table table-striped">
+                            @foreach (var feature in Model.CurrentProduct.ProductFeatures)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong> @feature.FeatureName</strong>
+                                    </td>
+                                    <td>
+                                        @feature.FeatureValue
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

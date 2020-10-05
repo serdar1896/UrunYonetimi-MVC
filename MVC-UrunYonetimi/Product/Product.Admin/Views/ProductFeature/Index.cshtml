@@ -1,0 +1,80 @@
+﻿@using System.Web.UI.WebControls
+@model Product.Admin.ViewModel.ProductFeaturePageModel
+@using Product.Admin.Helpers
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.SelectedProduct.ProductName  Özellikleri</h2>
+<p>
+    @Html.ActionLink("Yeni Ozellik", "Create", new { id = ViewBag.SelectedProduct.ProductId }, new { }) |
+    @Html.ActionLink("Yeni Ürün","Create","Product")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Products.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Products.ProductName)
+        </th>
+        <th>
+            &emsp;&nbsp RESİM
+        </th>
+    </tr>
+    <tr>
+        <td>
+           @Html.DisplayFor(model=> model.Products.Category.CategoryName)
+        </td>
+        <td>
+          @Html.DisplayFor(model=> model.Products.ProductName)
+        </td>
+
+        @{
+            //var productFirstImage = (Product.Data.Model.ProductImage)Model.Where(x => x.ProductId == (int)ViewBag.SelectedProduct.ProductId).Select(x => x.Products.ProductImages).FirstOrDefault();
+            var productFirstImage =  Model.Products.ProductImages.FirstOrDefault();
+            if (productFirstImage != null)
+            {
+                <td>
+                    @Html.Base64Image(productFirstImage)
+                </td>
+            }
+        }
+        <td>
+            @Html.ActionLink("Duzenle", "Edit", "Product", new { id = Model.Products.ProductId }, new { }) |
+            @Html.ActionLink("Detaylar", "Details", "Product", new { id = Model.Products.ProductId }, new { })|
+            @Html.ActionLink("Sil", "Delete", "Product", new { id = Model.Products.ProductId }, new { })
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model=> model.ProductFeature.FeatureName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductFeature.FeatureValue)
+        </th>
+    </tr>
+    @Html.Hidden("selectedProductId", (string)ViewBag.SelectedProduct.ProductId.ToString(), new { })
+    @foreach (var item in Model.ProductFeatureList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeatureName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeatureValue)
+
+            </td>
+            <td>
+                @Html.ActionLink("Duzenle", "Edit", new { id = item.ProductFeatureId, productid = item.ProductId }) |
+                @Html.ActionLink("Detaylar", "Details", new { id = item.ProductFeatureId, productid = item.ProductId }) |
+                @Html.ActionLink("Sil", "Delete", new { id = item.ProductFeatureId })
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    @Html.ActionLink("Listeye Don", "Index", "Product")
+</div>
